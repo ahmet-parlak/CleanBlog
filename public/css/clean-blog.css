@@ -369,6 +369,7 @@ form .form-group:first-child .floating-label-form-group {
 }
 
 footer {
+  margin-top: 50px;
   padding: 50px 0 65px;
 }
 
