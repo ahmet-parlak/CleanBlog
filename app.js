@@ -22,11 +22,12 @@ app.use(express.json());
 //ROUTES
 app.get('/', async (req, res) => {
   const posts = await Post.find({});
-  console.log(posts);
   res.render('index', { posts });
 });
-app.get('/post', (req, res) => {
-  res.render('post');
+app.get('/post/:id', (req, res) => {
+  Post.findById(req.params.id)
+    .then((post) => res.render('post', { post }))
+    .catch(() => res.render('404'));
 });
 app.get('/add-post', (req, res) => {
   res.render('add_post');

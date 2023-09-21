@@ -26,7 +26,7 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <% posts.forEach(post=> { %>
               <div class="post-preview">
-                <a href="post.html">
+                <a href="/post/<%= post.id %>">
                   <h2 class="post-title">
                     <%= post.title %>
                   </h2>
