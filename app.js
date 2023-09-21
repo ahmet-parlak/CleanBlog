@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const ejs = require('ejs');
-const Post = require('./models/Post');
+const methodOverride = require('method-override');
+
+const PageController = require('./controllers/PageController');
+const PostController = require('./controllers/PostController');
 
 //App
 const app = express();
@@ -18,30 +20,24 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(
+  methodOverride('_method', {
+    methods: ['GET', 'POST'],
+  })
+);
 
 //ROUTES
-app.get('/', async (req, res) => {
-  const posts = await Post.find({});
-  res.render('index', { posts });
-});
-app.get('/post/:id', (req, res) => {
-  Post.findById(req.params.id)
-    .then((post) => res.render('post', { post }))
-    .catch(() => res.render('404'));
-});
-app.get('/add-post', (req, res) => {
-  res.render('add_post');
-});
-app.post('/add-post', async (req, res) => {
-  await Post.create(req.body);
-  res.redirect('/');
-});
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-app.get('*', (req, res) => {
-  res.render('404');
-});
+app.get('/', PageController.indexPage);
+app.get('/about', PageController.aboutPage);
+app.get('/add', PageController.addPostPage);
+
+app.post('/post', PostController.create);
+app.get('/post/:id', PostController.show);
+app.get('/post/:id/edit', PostController.edit);
+app.put('/post/:id', PostController.update);
+app.delete('/post/:id', PostController.delete);
+
+app.get('*', PageController.notFoundPage);
 
 const port = 3000;
 app.listen(port, () => {
