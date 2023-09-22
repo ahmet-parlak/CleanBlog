@@ -39,7 +39,7 @@ app.delete('/post/:id', PostController.delete);
 
 app.get('*', PageController.notFoundPage);
 
-const port = 3000;
+const port = process.env.PORT ?? 5000;
 app.listen(port, () => {
   console.log(`The server has started running on port ${port}..`);
 });
