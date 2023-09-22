@@ -10,7 +10,7 @@ const app = express();
 
 //DB CONNECTION
 mongoose
-  .connect('mongodb://localhost:27017/cleanblog-test-db')
+  .connect('mongodb+srv://ahmetparlak:b5IFSR2Xx8J1y2Bj@cluster0.jtacpdq.mongodb.net/clean-blog-db?retryWrites=true&w=majority')
   .then(() => console.log('MongoDB connection successful!'));
 
 //TEMPLATE ENGINE
